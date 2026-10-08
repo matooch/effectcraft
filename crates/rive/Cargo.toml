@@ -1,0 +1,16 @@
+[package]
+name = "effectcraft-rive"
+description = "Rive (.riv) runtime file reading and writing: the binary object stream, and the artboards, components, linear animations, keyframes and interpolators it holds"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+thiserror = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

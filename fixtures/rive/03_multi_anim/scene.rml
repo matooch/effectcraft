@@ -1,0 +1,54 @@
+<!-- 03_multi_anim: one artboard, three animations with different fps, lengths
+     and loop modes, animating different objects:
+       idle   60 fps, 1 s (60 f), loop:     Box opacity 1 -> 0.4 (0.5 s) -> 1
+       bounce 30 fps, 1 s (30 f), pingPong: Ball y 250 -> 120
+       spin   24 fps, 2 s (48 f), oneShot:  Box rotation 0 -> 360deg
+     The state machine plays "idle" (the captures show only that one). -->
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:90" width="500" height="500" name="Multi" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="FF1D1D1D" name="Color"/>
+        </Fill>
+        <Shape x="150" y="250" name="Box" id="0:10">
+            <Rectangle width="120" height="120" name="Rect"/>
+            <Fill name="Fill"><SolidColor colorValue="FF57A5E0" name="Color"/></Fill>
+        </Shape>
+        <Shape x="350" y="250" name="Ball" id="0:11">
+            <Ellipse width="90" height="90" name="Circle"/>
+            <Fill name="Fill"><SolidColor colorValue="FFE0A557" name="Color"/></Fill>
+        </Shape>
+        <StateMachine name="SM" id="0:90">
+            <StateMachineLayer name="Layer" id="0:91">
+                <AnyState x="300" y="-100"/>
+                <ExitState x="450" y="-100"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:92"/></EntryState>
+                <AnimationState animationId="0:20" x="150" y="0" id="0:92"/>
+            </StateMachineLayer>
+        </StateMachine>
+        <LinearAnimation fps="60" duration="60" loopValue="loop" name="idle" id="0:20">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="linear"/>
+                    <KeyFrameDouble frame="30" value="0.4" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="1" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <LinearAnimation fps="30" duration="30" loopValue="pingPong" name="bounce" id="0:21">
+            <KeyedObject objectId="0:11">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="250" interpolationType="linear"/>
+                    <KeyFrameDouble frame="30" value="120" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <LinearAnimation fps="24" duration="48" loopValue="oneShot" name="spin" id="0:22">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear"/>
+                    <KeyFrameDouble frame="48" value="6.2831855" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+    </Artboard>
+</Rive>

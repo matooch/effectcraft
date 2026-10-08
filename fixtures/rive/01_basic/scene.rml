@@ -1,0 +1,53 @@
+<!-- 01_basic: one rectangle, one 2 s animation at 30 fps, linear keys.
+     x 150->350, y 150->300, rotation 0 -> 30deg (1 s) -> 90deg (2 s),
+     scaleX 1->1.5, scaleY 1->0.5, opacity 1->0.25. -->
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:90" width="500" height="500" name="Basic" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="FF1D1D1D" name="Color"/>
+        </Fill>
+        <Shape x="150" y="150" name="Box" id="0:10">
+            <Rectangle width="100" height="60" name="Rect"/>
+            <Fill name="Fill">
+                <SolidColor colorValue="FF57A5E0" name="Color"/>
+            </Fill>
+        </Shape>
+        <StateMachine name="SM" id="0:90">
+            <StateMachineLayer name="Layer" id="0:91">
+                <AnyState x="300" y="-100"/>
+                <ExitState x="450" y="-100"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:92"/></EntryState>
+                <AnimationState animationId="0:20" x="150" y="0" id="0:92"/>
+            </StateMachineLayer>
+        </StateMachine>
+        <LinearAnimation fps="30" duration="60" loopValue="oneShot" name="basic" id="0:20">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="150" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="350" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="150" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="300" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear"/>
+                    <KeyFrameDouble frame="30" value="0.5235988" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="1.5707964" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="1.5" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="0.5" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="0.25" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+    </Artboard>
+</Rive>

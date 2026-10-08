@@ -1,0 +1,69 @@
+<!-- 02_easing: four boxes move x 100->400 over 2 s (60 frames at 30 fps).
+     Row 1 linear; row 2 cubic ease-in-out (0.42,0,0.58,1); row 3 custom cubic
+     (0.1,0.9,0.2,1); row 4 hold keys 100 (0 s) -> 250 (1 s) -> 400 (2 s). -->
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:90" width="500" height="500" name="Easing" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="FF1D1D1D" name="Color"/>
+        </Fill>
+        <Shape x="100" y="100" name="Linear" id="0:10">
+            <Rectangle width="50" height="50" name="Rect"/>
+            <Fill name="Fill"><SolidColor colorValue="FF57A5E0" name="Color"/></Fill>
+        </Shape>
+        <Shape x="100" y="200" name="EaseInOut" id="0:11">
+            <Rectangle width="50" height="50" name="Rect"/>
+            <Fill name="Fill"><SolidColor colorValue="FFE0A557" name="Color"/></Fill>
+        </Shape>
+        <Shape x="100" y="300" name="Custom" id="0:12">
+            <Rectangle width="50" height="50" name="Rect"/>
+            <Fill name="Fill"><SolidColor colorValue="FF7FE057" name="Color"/></Fill>
+        </Shape>
+        <Shape x="100" y="400" name="Hold" id="0:13">
+            <Rectangle width="50" height="50" name="Rect"/>
+            <Fill name="Fill"><SolidColor colorValue="FFE0577F" name="Color"/></Fill>
+        </Shape>
+        <StateMachine name="SM" id="0:90">
+            <StateMachineLayer name="Layer" id="0:91">
+                <AnyState x="300" y="-100"/>
+                <ExitState x="450" y="-100"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:92"/></EntryState>
+                <AnimationState animationId="0:20" x="150" y="0" id="0:92"/>
+            </StateMachineLayer>
+        </StateMachine>
+        <LinearAnimation fps="30" duration="60" loopValue="oneShot" name="easing" id="0:20">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="100" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="400" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:11">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="100" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble frame="60" value="400" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1"/>
+                    </KeyFrameDouble>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="100" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.1" y1="0.9" x2="0.2" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble frame="60" value="400" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.1" y1="0.9" x2="0.2" y2="1"/>
+                    </KeyFrameDouble>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:13">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="100" interpolationType="hold"/>
+                    <KeyFrameDouble frame="30" value="250" interpolationType="hold"/>
+                    <KeyFrameDouble frame="60" value="400" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+    </Artboard>
+</Rive>
