@@ -8,6 +8,7 @@
 
 pub mod build;
 pub mod essential;
+pub mod linked;
 pub mod props;
 pub mod render_queue;
 pub mod render_templates;
@@ -329,6 +330,10 @@ pub struct Comp {
     /// Essential Graphics: the controls this comp exposes to instances and templates.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub essential: Option<essential::EssentialGraphics>,
+    /// A linked timeline: the base composition whose layers this one animates (see
+    /// [`linked`]). Its layers mirror the base's and only its keyframes are its own.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub timeline_of: Option<ItemId>,
 }
 
 /// A viewer guide line: vertical guides sit at an x position, horizontal ones at a y position.
@@ -374,6 +379,7 @@ impl Comp {
             guides: vec![],
             global_light: styles::GlobalLight::default(),
             essential: None,
+            timeline_of: None,
         }
     }
     /// Whether the composition has a frame at its time `t`: nested, it shows nothing before it
@@ -703,6 +709,8 @@ impl Comp {
             global_light,
             guides,
             essential,
+            // Which comp a timeline is linked to doesn't change its pixels (its layers do).
+            timeline_of: _,
         } = self;
         *width == o.width
             && *height == o.height
@@ -1217,12 +1225,20 @@ impl Project {
         self.comps().find(|(_, c)| c.layer(layer).is_some()).map(|(id, _)| *id)
     }
     /// Whether comp `inner` is (transitively) nested inside comp `outer` (to prevent cycles).
+    /// Safe on projects that already hold a nesting cycle (each comp is visited once).
     pub fn comp_contains(&self, outer: ItemId, inner: ItemId) -> bool {
+        let mut seen = std::collections::BTreeSet::new();
+        self.comp_contains_in(outer, inner, &mut seen)
+    }
+    fn comp_contains_in(&self, outer: ItemId, inner: ItemId, seen: &mut std::collections::BTreeSet<ItemId>) -> bool {
         if outer == inner {
             return true;
         }
+        if !seen.insert(outer) {
+            return false;
+        }
         let Some(c) = self.comp(outer) else { return false };
-        c.layers.iter().any(|l| matches!(l.source, LayerSource::Comp { item } if self.comp_contains(item, inner)))
+        c.layers.iter().any(|l| matches!(l.source, LayerSource::Comp { item } if self.comp_contains_in(item, inner, seen)))
     }
     /// Make sure `next_id` exceeds every id in the project (after loading or merging).
     pub fn fix_next_id(&mut self) {
@@ -1293,3 +1309,5 @@ impl Project {
 
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+mod tests_linked;

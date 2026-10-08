@@ -384,6 +384,18 @@ that instance. The renderer draws an instance with overrides from a copy of the 
 overridden source properties set (`essential::with_overrides`). Templates are `.ectemplate`
 ZIPs: `manifest.json` (controls), `project.ecproj` (the comp and its dependencies), `media/…` and
 `poster.png`; importing offsets every id past the project's (`essential::offset_ids`).
+**Linked timelines** (`project::linked`, `engine::commands::linked`): a comp whose
+`timeline_of` names a *base* comp animates the base's layers, as a Rive linear animation animates
+its artboard. The base owns the layers and everything static; each timeline owns only its
+keyframes (plus its own frame rate, duration, work area, markers and background). A timeline's
+`layers` stay materialised (the base's layers, same layer ids and property uids, carrying the
+timeline's keys), so rendering, nesting and every command treat it as an ordinary comp.
+`Session::edit` runs `linked::sync_project`: a timeline an edit changed pushes its non-keyframe
+changes up to the base (layers added, removed, reordered or renamed, switches, effects,
+unanimated values), then every timeline is rebuilt from its base keeping its own keys. Properties
+a timeline doesn't animate show the base's value at time 0. An edit that would make a timeline
+nest itself is refused. Commands: `comp.newLinkedTimeline`, `comp.unlinkTimeline`,
+`comp.linkedTimelines`.
 **Responsive Design — Time**: a time-stretched precomp maps time piecewise so its protected
 marker regions play at 100 % (`eval::responsive_source_time`).
 

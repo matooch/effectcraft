@@ -32,6 +32,7 @@ mod layer;
 mod layer_menu;
 mod layer_time;
 pub(crate) mod link;
+mod linked;
 mod liquify;
 mod lottie;
 pub mod markers;
@@ -172,6 +173,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
         v.extend(key_transform::specs());
         v.extend(file_more::specs());
         v.extend(lottie::specs());
+        v.extend(linked::specs());
         v.extend(timeline::specs());
         v.extend(comp_more::specs());
         v.extend(frame_export::specs());

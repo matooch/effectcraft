@@ -563,6 +563,8 @@ impl Session {
         let mut p = (*self.project).clone();
         let mut st = self.state.clone();
         let r = f(&mut p, &mut st)?;
+        // Linked timelines: static edits go to the base, the base's layers to every timeline.
+        effectcraft_project::linked::sync_project(&before, &mut p).map_err(|e| EngineError::Other(e.to_string()))?;
         // Layer styles: one Global Light per comp, whichever layer edited it.
         effectcraft_project::styles::sync_global_light(&before, &mut p);
         // Essential Properties of precomp layers follow their comps' Essential Graphics.
@@ -973,6 +975,8 @@ mod tests_fidelity;
 mod tests_frame_export;
 #[cfg(test)]
 mod tests_keylight;
+#[cfg(test)]
+mod tests_linked;
 #[cfg(test)]
 mod tests_lottie;
 #[cfg(test)]
