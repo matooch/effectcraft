@@ -51,6 +51,7 @@ pub mod puppet;
 mod query;
 mod render_queue;
 pub(crate) mod rig3d;
+mod rive;
 pub mod roto_cmds;
 mod scene_detect;
 pub mod scripts;
@@ -174,6 +175,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
         v.extend(file_more::specs());
         v.extend(lottie::specs());
         v.extend(linked::specs());
+        v.extend(rive::specs());
         v.extend(timeline::specs());
         v.extend(comp_more::specs());
         v.extend(frame_export::specs());

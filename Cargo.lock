@@ -1230,6 +1230,7 @@ dependencies = [
  "effectcraft-psd",
  "effectcraft-raster",
  "effectcraft-render",
+ "effectcraft-rive",
  "effectcraft-segment",
  "effectcraft-svg",
  "effectcraft-text",
@@ -1535,6 +1536,12 @@ dependencies = [
 name = "effectcraft-rive"
 version = "0.4.0"
 dependencies = [
+ "effectcraft-color",
+ "effectcraft-project",
+ "effectcraft-raster",
+ "effectcraft-render",
+ "effectcraft-time",
+ "image",
  "serde_json",
  "thiserror 2.0.21",
 ]

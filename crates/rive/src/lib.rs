@@ -21,8 +21,10 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 
 mod defs;
+pub mod import;
 mod model;
 
+pub use import::{ImportResult, import};
 pub use model::{
     Artboard, Document, Interp, Interpolator, KeyFrame, KeyValue, KeyedObject, KeyedProperty, LinearAnimation, Loop, Object, StateMachineInfo, keys,
 };
@@ -384,3 +386,5 @@ pub(crate) fn type_label(type_key: u32) -> String {
 
 #[cfg(test)]
 mod tests;
+#[cfg(test)]
+mod tests_import;

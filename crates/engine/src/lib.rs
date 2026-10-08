@@ -1000,6 +1000,8 @@ mod tests_proxy;
 #[cfg(test)]
 mod tests_rig3d;
 #[cfg(test)]
+mod tests_rive;
+#[cfg(test)]
 mod tests_settings;
 #[cfg(test)]
 mod tests_stubs;
